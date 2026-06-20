@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DropMode;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import dev.donutquine.editor.layout.contextmenus.FrameTableContextMenu;
 import dev.donutquine.editor.renderer.BlendMode;
 import dev.donutquine.renderer.impl.swf.objects.DisplayObject;
 import dev.donutquine.renderer.impl.swf.objects.MovieClip;
+import dev.donutquine.renderer.impl.swf.objects.TextField;
 import dev.donutquine.swf.movieclips.MovieClipFrame;
 
 public class MovieClipPropertyPanel extends JPanel {
@@ -62,6 +64,10 @@ public class MovieClipPropertyPanel extends JPanel {
         );
 
         this.textInfoPanel.setLayout(new BoxLayout(this.textInfoPanel, BoxLayout.Y_AXIS));
+
+        JCheckBox showTextFieldsCheckbox = new JCheckBox("Show TextField placeholders", TextField.showPlaceholders);
+        showTextFieldsCheckbox.addActionListener(e -> TextField.showPlaceholders = showTextFieldsCheckbox.isSelected());
+        this.textInfoPanel.add(showTextFieldsCheckbox);
 
         this.add(new JScrollPane(this.timelineChildrenTable), "Children");
         this.add(new JScrollPane(this.framesTable), "Frames");

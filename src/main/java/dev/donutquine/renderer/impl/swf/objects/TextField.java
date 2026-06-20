@@ -11,6 +11,8 @@ import dev.donutquine.utilities.RenderConfig;
 import java.awt.*;
 
 public class TextField extends DisplayObject {
+    /** Whether to render TextField placeholder rectangles. Defaults to false since there is no font renderer. */
+    public static boolean showPlaceholders = false;
     private boolean isInteractive;
     private float cursorBlinkTime;
     private Rect bounds;
@@ -52,6 +54,8 @@ public class TextField extends DisplayObject {
     }
 
     private boolean shapeRender(Stage stage, Matrix2x3 matrix, ColorTransform colorTransform, int renderConfigBits, boolean noBounds) {
+        if (!showPlaceholders) return false;
+
         Rect transformedBounds = new Rect(
             matrix.applyX(bounds.getLeft(), bounds.getTop()),
             matrix.applyY(bounds.getLeft(), bounds.getTop()),
