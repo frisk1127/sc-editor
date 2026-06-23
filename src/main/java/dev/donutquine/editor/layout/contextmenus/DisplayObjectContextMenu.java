@@ -242,6 +242,12 @@ public class DisplayObjectContextMenu extends ContextMenu {
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("AV1 video", "avi"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MP4 video (no transparency)", "mp4"));
 
+        MovieClip movieClip = (MovieClip) getRenderableObject(displayObjectId);
+        String exportName = movieClip.getExportName();
+        if (exportName != null) {
+            fileChooser.setSelectedFile(new java.io.File(exportName));
+        }
+
         int result = fileChooser.showSaveDialog(swfLayoutController.window.getFrame());
         if (result != SystemFileChooser.APPROVE_OPTION) return;
 
@@ -274,13 +280,17 @@ public class DisplayObjectContextMenu extends ContextMenu {
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("GIF animation (transparent)", "gif"));
 
+        MovieClip movieClip = (MovieClip) getRenderableObject(displayObjectId);
+        String exportName = movieClip.getExportName();
+        if (exportName != null) {
+            fileChooser.setSelectedFile(new java.io.File(exportName));
+        }
+
         int result = fileChooser.showSaveDialog(swfLayoutController.window.getFrame());
         if (result != SystemFileChooser.APPROVE_OPTION) return;
 
         Path path = SystemFileChooserUtil.getPathWithExtension(fileChooser, "gif");
         if (path == null) return;
-
-        MovieClip movieClip = (MovieClip) getRenderableObject(displayObjectId);
 
         // GIF frame delays are stored in centiseconds (1/100s).
         // To avoid rounding errors, pick the highest fps that evenly divides 100
