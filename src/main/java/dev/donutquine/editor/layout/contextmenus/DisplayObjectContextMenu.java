@@ -245,7 +245,8 @@ public class DisplayObjectContextMenu extends ContextMenu {
         MovieClip movieClip = (MovieClip) getRenderableObject(displayObjectId);
         String exportName = movieClip.getExportName();
         if (exportName != null) {
-            fileChooser.setSelectedFile(new java.io.File(exportName));
+            java.io.File currentDir = fileChooser.getCurrentDirectory();
+            fileChooser.setSelectedFile(new java.io.File(currentDir, exportName));
         }
 
         int result = fileChooser.showSaveDialog(swfLayoutController.window.getFrame());
@@ -283,7 +284,8 @@ public class DisplayObjectContextMenu extends ContextMenu {
         MovieClip movieClip = (MovieClip) getRenderableObject(displayObjectId);
         String exportName = movieClip.getExportName();
         if (exportName != null) {
-            fileChooser.setSelectedFile(new java.io.File(exportName));
+            java.io.File currentDir = fileChooser.getCurrentDirectory();
+            fileChooser.setSelectedFile(new java.io.File(currentDir, exportName));
         }
 
         int result = fileChooser.showSaveDialog(swfLayoutController.window.getFrame());
@@ -565,7 +567,9 @@ public class DisplayObjectContextMenu extends ContextMenu {
                     frameName = String.join("-", frameName, frameLabel);
                 }
 
-                return Path.of(addPixelSizeToFilename(String.valueOf(displayObject.getId()), pixelSize), frameName + ".png");
+                String exportName = movieClip.getExportName();
+                String folderName = exportName != null ? exportName : String.valueOf(displayObject.getId());
+                return Path.of(addPixelSizeToFilename(folderName, pixelSize), frameName + ".png");
             }
 
             String exportName = movieClip.getExportName();
